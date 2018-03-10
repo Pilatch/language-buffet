@@ -1,0 +1,11 @@
+[package]
+name = "rust"
+version = "0.1.0"
+authors = ["Ethan Martin <Martin.Ethan@pennmutual.com>"]
+
+[dependencies]
+json = "0.11.3"
+serde = "1.0.27"
+serde_derive = "1.0.27"
+serde_json = "1.0"
+valico = "1"

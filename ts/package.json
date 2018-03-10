@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "all": "tsc main.ts; node main.js",
+    "build": "tsc main.ts",
+    "main": "node main.js"
+  },
+  "dependencies": {
+    "ajv": "^6.1.1"
+  },
+  "devDependencies": {
+    "@types/ajv": "^1.0.0",
+    "@types/node": "^9.4.0",
+    "typescript": "^2.7.1"
+  }
+}
