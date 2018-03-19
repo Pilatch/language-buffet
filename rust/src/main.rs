@@ -35,12 +35,12 @@ fn main() {
       match player.winPercent {
         Some(win_percent) =>
           println!("{} wins {:?}% of the time.", player.name, win_percent),
+          // The funky Elvis operator in the first argument of println! is what allows us to pass a Result
+          // as the second argument, rather than a String. This is helpful for debugging purposes.
 
         None =>
           println!("{} is a new player.", player.name),
       }
-      // The funky Elvis operator in the first argument of println! is what allows us to pass a Result
-      // as the second argument, rather than a String. This is helpful for debugging purposes.
     Err(err) => println!("Oh no! {}", err),
       // println! ends with a bang because it's a macro,
       // which "expands to something" type-safe at compile time.
@@ -55,6 +55,12 @@ fn main() {
 // Rust is a large, powerful language with a terse, special-character-sprinked syntax
 // that would require a lot of wrote memorization for me to become proficient.
 // Its goals are clear and level-headed. It has frequent updates from the Mozilla development team.
+// Here are some companies using Rust - https://www.rust-lang.org/en-US/friends.html
+// Some names I recognize in there include Atlassian, Chef, Dropbox, NPM
+// Note - there is "Autumn" for machine learning with Rust. https://medium.com/@autumn_eng/about-rust-s-machine-learning-community-4cda5ec8a790
 // Its package manager cargo is easy to use.
 // Rust compiles to system-native binary.
 // Rust is probably superior to Go in terms of its goals, but with an unattractive learning curve.
+// Example of an experienced developer's experience with both - https://news.ycombinator.com/item?id=13430108
+//   Quote from above: "Rust's type system is carefully designed to avoid [defects that would arise from mutexes]."
+// Rust has a performance advantage over Go in terms of garbage collection - https://doc.rust-lang.org/book/second-edition/ch04-01-what-is-ownership.html#the-stack-and-the-heap

@@ -1,3 +1,6 @@
+clojurescript/out
+clojurescript/target
+
 elixir/deps
 elixir/_build
 

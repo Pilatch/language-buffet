@@ -29,3 +29,9 @@
 
 ; If you're determined to use a Lisp variant, Clojure could be attractive because it compiles to JVM byte code,
 ; while ClojureScript compiles to JavaScript https://clojurescript.org/reference/dependencies
+
+; However smelly this code may be, there are complex production systems that use Lisp,
+; and developers who endorse it. https://softwareengineering.stackexchange.com/questions/51082/would-you-use-a-dialect-of-lisp-for-a-real-world-application-where-and-why
+;   "Macro metaprogramming - the Lisp "code is data" philosophy is hard to understand unless you've actually experienced it,
+;    but it's one of the reasons Lisps are so expressive and productive.
+;    You basically have the power to extend the language to match your problem domain."
