@@ -1,3 +1,3 @@
 hfmt -w
-ghc -XDeriveGeneric -XOverloadedStrings -o main main.hs && \
+ghc -XDeriveGeneric -o main main.hs && \
 ./main
