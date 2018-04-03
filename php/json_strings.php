@@ -1,22 +1,5 @@
 <?
 
-$playerSchema = <<<'JSON'
-{
-  "type": "object",
-  "properties": {
-    "winPercent": {
-      "type": [
-        "number",
-        "null"
-      ]
-    },
-    "name": {
-      "type": "string"
-    }
-  }
-}
-JSON;
-
 $goodJson = '{
   "name": "Nooby McNooberson",
   "winPercent": null
