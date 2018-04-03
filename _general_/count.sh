@@ -13,7 +13,9 @@ echo
 
 for f in $(ls $mainsDir)
 do
-  echo $f
+  filename=$(basename -- "$f")
+  extension="${f##*.}"
+  echo $extension
   echo Non-blank lines: $(cat $mainsDir/$f | sed '/^\s*$/d' | wc -l)
   echo Characters: $(cat $mainsDir/$f | sed '/^\s*$/d' | wc -c)
   echo
