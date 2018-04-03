@@ -6,9 +6,8 @@ import           Data.Aeson
 
 import qualified Data.ByteString.Lazy
 import           GHC.Generics
-import           JsonStrings
 
-jsonToDecode = Data.ByteString.Lazy.readFile "good.json"
+jsonToDecode = Data.ByteString.Lazy.readFile "glad.json"
 
 data Player = Player
   { name       :: String
@@ -16,10 +15,22 @@ data Player = Player
   } deriving (Show, Generic, FromJSON)
 
 main = do
-  result <- (eitherDecode <$> jsonToDecode) :: IO (Either String [Player])
+  result <- (eitherDecode <$> jsonToDecode) :: IO (Either String Player)
   case result of
-    Left err   -> print err
-    Right name -> print name -- Installing hfmt to format my code felt necessary
+    Left err -> print err
+    Right player ->
+      case winPercent player of
+        Nothing -> print $ (name player) ++ " is a new player."
+        Just winPercent ->
+          print $
+          (name player) ++ " wins " ++ (show winPercent) ++ "% of the time."
+-- Where did that name function come from? It was derived via the Generic macro, I think.
+-- It's effectively an accessor. Same would happen for the winPercent field, but in the pattern matching
+-- against the Just constructor, the variable winPercent is in scope when it gets printed out.
+-- I understand that the ($) operator is used to avoid parentheses.
+-- What the <$> operator does... I don't know yet.
+-- It's "effectively fmap". http://hackage.haskell.org/package/base-4.8.2.0/docs/Data-Functor.html#v:fmap
+-- Installing hfmt to format my code felt necessary
 -- because I wasn't finding a good way to make my data type look
 -- tidy on my own. It took forever to install.
 -- I can say the same for the Aeson module. It took far longer than
