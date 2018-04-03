@@ -9,20 +9,20 @@
 
 (def PlayerSchema
   "A chess player schema"
-  {:name s/Str
-   :winPercent [s/Num]}) ; I don't know how to handle a nullable number, and at this point I'm too afraid to ask.
+  {(s/required-key :name) s/Str
+   (s/required-key :winPercent) [s/Num]}) ; Apparently you wrap in brackets to get it nullable.
 
 (try
-  (def player (.parse js/JSON jsonstrings/glad))
+  (def player (js->clj (.parse js/JSON jsonstrings/good) :keywordize-keys true)) ; Took forever for me to figure out this needed to be a clj map, not a "js literal"
   (try
-    (s/validate PlayerSchema player) ; This doesn't even work as expected. Something about
+    (s/validate PlayerSchema player)
     (if (player :winPercent)
       (println (str (player :name) " wins " (player :winPercent) "% of the time."))
       (println (str (player :name) " is a new player.")))
     (catch js/Error e
-      (println e)))
+      (println (str "validation error" e))))
 (catch js/Error e
-  (println e)))
+  (println (str "parse error" e))))
 
 ; This compiles to a JavaScript file that is 1.4Mb large, minified.
 
@@ -51,6 +51,10 @@
 ; clojurescript interoperates with is documented,
 ; but also that it's impossible to gain complete confidence.
 ; https://clojurescript.org/guides/externs
+; The compiler feels useless.
+; It's slow and has crappy error messages that are just Java stack traces.
+; Once you actually do get your application to compile, you may run it in a browser only to find that there's
+; an uninstantiated JavaScript var or something.
 
 ; It took me longer than it should have to find the package manager.
 ; https://leiningen.org/
@@ -67,10 +71,6 @@
 ; There's a thing called Reagent which allows you to write your React app in Clojurescript.
 ; https://github.com/reagent-project/reagent
 ; By looking through its source code I was finally able to figure out how to require a local file!
-
-; The compiler is slow and has crappy error messages that are just Java stack traces.
-; Once you actually do get your application to compile, you may run it in a browser only to find that there's
-; an uninstantiated JavaScript var or something.
 
 ; Regarding if/else, there does not appear to be an else keyword that works in tandem with if.
 ; That means when you want if/else-if/else, it will look like this:
@@ -94,6 +94,7 @@
 ; Conclusion: If you want to write LISP, that's actually Java, and can compile to JavaScript,
 ; then totally go for Clojure.
 
+; An experienced dev's gripe:
 ; "My main annoyance with cljs is that rethrowing errors in Chrome swallows the stack trace
 ; and core.async wraps everything in a try/catch block.
 ; This means that you need to debug by breaking on error, typing `ex.stack` in the console,
