@@ -11,11 +11,17 @@ type alias Player =
 
 
 main =
-    gladJson |> decodePlayer |> introduce |> text
+    gladJson
+        |> decodePlayer
+        |> introduce
+        |> text
 
 
 decodePlayer =
-    Decode.map2 Player (field "name" string) (field "winPercent" (nullable float)) |> decodeString
+    Decode.map2 Player
+        (field "name" string)
+        (field "winPercent" (nullable float))
+        |> decodeString
 
 
 introduce result =
@@ -33,6 +39,10 @@ introduce result =
 
 
 
+-- Best criticism of Elm I've seen, mostly about the Foreign Function Interface, (FFI), restriction coming with the 0.19 compiler.
+-- https://lukeplant.me.uk/blog/posts/two-experiences-with-elm/
+-- There is praise for the language in there too, the most interesting being about tests
+-- https://lukeplant.me.uk/blog/posts/two-experiences-with-elm/#fewertests
 -- Analysis of a React/Electron app ported to Elm/Electron https://toast.al/posts/code/2016-12-01-rewriting-react-and-releasing-elm-into-the-wild.html
 -- Phoenix gets paired with Elm on the front-end commonly.
 -- Who uses Elm: (Some credit to this blog post https://www.imaginarycloud.com/blog/elm-javascript-reinvented-2/)
@@ -42,7 +52,9 @@ introduce result =
 -- CARFAX
 -- CBANC (all front end dev is Elm) https://www.cbancnetwork.com/
 -- CircuitHub https://circuithub.com/
--- Daily Drip - https://github.com/dailydrip
+-- CurrySoftware https://www.curry-software.com/en/
+-- Day One https://dayoneapp.com/
+-- Daily Drip https://github.com/dailydrip
 -- Drip Engineering https://www.drip.com/
 -- Future of Coding teaches Elm to 4th graders http://futureofcoding.org
 -- Gizra https://www.gizra.com/

@@ -89,6 +89,9 @@
 ; Maybe use a case statement instead.
 ; https://clojuredocs.org/clojure.core/case
 
+; Clojure can run in a number of different virtual machines.
+; https://m.oursky.com/why-i-chose-clojure-over-javascript-24f045daab7e
+
 ; Conclusion: If you want to write LISP, that's actually Java, and can compile to JavaScript,
 ; then totally go for Clojure.
 

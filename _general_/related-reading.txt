@@ -1,2 +1,38 @@
 One guy's opinions on how to choose a language for a project
 https://tomassetti.me/best-programming-languages/
+
+This guy describes his journey from Python to Go to Rust
+http://tech.allo-media.net/point/of/view/2018/03/22/from-python-to-go-to-rust.html
+
+The "Billion Dollar Mistake" - invention of the null reference in 1965
+https://en.wikipedia.org/wiki/Tony_Hoare
+
+# General Language Criticism
+
+## Using symbols rather than words makes a language more difficult to learn
+
+Example in ClojureScript code
+
+(def my-js-obj #js{:foo "bar"})
+(.log js/console my-js-object)
+
+What does that `#js{}` do? Is that JavaScript interoperation?
+How would I find this in the syntax documentation?
+https://cljs.github.io/api/syntax/
+
+Nope! Thats an object literal.
+https://cljs.github.io/api/syntax/tagged-literal
+
+Example in Ruby documentation
+
+https://ruby-doc.org/core-1.9.3/Array.html
+
+Look at the list of methods on the left. Some start with `::` but most start with `#`.
+What's the difference? Why don't you have to use the # when calling functions?
+
+Example in PHP documentation
+
+http://php.net/manual/en/function.preg-replace.php
+
+What is up with the `[]` around some parameters.
+Why does the last parameter have a `&` in front of it?
