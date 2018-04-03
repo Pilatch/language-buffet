@@ -41,3 +41,4 @@ main = do
 -- but somehow turning on the OverloadedStrings pragma solved it for them, but not me.
 -- Note that means using the comment atop main.hs, and setting a compiler flag on the command line.
 -- For some reason, setting that pragma is not necessary for DeriveGeneric, but the compiler flag is necessary.
+-- The first version of Haskell ("Haskell 1.0") was defined in 1990.

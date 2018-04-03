@@ -31,9 +31,11 @@ if ($validator->isValid()) {
 // language, but sort of retrofitted to do more than wrap the HTTP requests/response cycle.
 // If you're going to pick PHP for a project, it's probably because of some existing framework,
 // and not because you're excited to code in PHP.
-//
+
 // That said, Facebook, Wikipedia, Wordpress, Etsy, Baidu, Box, and Slack are written in PHP.
 // Maybe it's because of the fast development cycle.
+
+// PHP was originally created by Rasmus Lerdorf in 1994.
 
 // https://slack.engineering/taking-php-seriously-cf7a60065329
 // The author if this article states that PHP is a member of the "Mixed-Paradigm Developer Productivity Languages",

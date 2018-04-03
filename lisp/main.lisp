@@ -15,7 +15,7 @@
 ; make things talk to you.
 ; I have not gotten to the touted metaprogramming, and at this point I don't care to.
 
-; Paraphrasing Ian Bicking
+; Paraphrasing Ian Bicking (a programmer for Mozilla)
 ; http://www.ianbicking.org/the-challenge-of-metaprogramming.html
 
 ; Metaprogramming can save an experienced Lisp programmer from writing a significant fraction of
@@ -35,3 +35,5 @@
 ;   "Macro metaprogramming - the Lisp "code is data" philosophy is hard to understand unless you've actually experienced it,
 ;    but it's one of the reasons Lisps are so expressive and productive.
 ;    You basically have the power to extend the language to match your problem domain."
+
+; Reddit was originally written in common lisp, but then ported to Python in 2005.

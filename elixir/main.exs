@@ -55,3 +55,6 @@ defmodule Main do
 end
 
 Main.main
+
+# hexdocs has been praised for documenation by this guy - https://elmtown.audio/29-knode-with-jim-carlson
+#   https://hexdocs.pm/

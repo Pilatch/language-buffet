@@ -1,7 +1,6 @@
 (ns main.core
-  (:require [main.jsonstrings :as jsonstrings] [schema.core :as s
-             :include-macros true
-             ]))
+  (:require [main.jsonstrings :as jsonstrings]
+    [schema.core :as s :include-macros true]))
 ; The require call will silently fail if you have more than one of them,
 ; then only the last thingy you require will actually get loaded!
 ; This ate probably five hours of my life.
@@ -69,7 +68,7 @@
 ; https://github.com/reagent-project/reagent
 ; By looking through its source code I was finally able to figure out how to require a local file!
 
-; The compiler is solw and has crappy error messages that are just Java stack traces.
+; The compiler is slow and has crappy error messages that are just Java stack traces.
 ; Once you actually do get your application to compile, you may run it in a browser only to find that there's
 ; an uninstantiated JavaScript var or something.
 
@@ -95,3 +94,11 @@
 ; Conclusion: If you want to write LISP, that's actually Java, and can compile to JavaScript,
 ; then totally go for Clojure.
 
+; "My main annoyance with cljs is that rethrowing errors in Chrome swallows the stack trace
+; and core.async wraps everything in a try/catch block.
+; This means that you need to debug by breaking on error, typing `ex.stack` in the console,
+; and reading compiled JS frames to find the source." https://news.ycombinator.com/item?id=9489282
+
+; Macros are the bees' knees. https://www.braveclojure.com/writing-macros/
+; That's the major upside of using Clojure. Though note the caveat on that.
+; (See the section on Lisp, and Rust regarding metaprogramming and macros, respectively.)

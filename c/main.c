@@ -34,6 +34,10 @@ int main()
   return 0;
 }
 
+// C was originally developed by Dennis Ritchie between 1969 and 1973 at Bell Labs,
+// and used to re-implement the Unix operating system. (It was originally written in assembly.)
+// This allowed it to be much more portable.
+
 // I've always been intimidated by C.
 
 // There are header files and linking before compiling, so what does that mean?

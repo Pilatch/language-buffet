@@ -29,3 +29,13 @@ try {
 } catch (error) {
   console.error(`Here's what went wrong. ${error}`)
 }
+
+// In other languages we might instead see something like this:
+//
+//   let isValid = jsonStrings.radJson |> JSON.parse |> ajv.validate(playerSchema)
+//
+// Eventually this could be doable in JavaScript, but it gets ugly when dealing with
+// functions that accept multiple parameters because calling a function in JavaScript
+// will result in that function being fully executed rather than currying.
+// https://github.com/tc39/proposal-pipeline-operator#functions-with-multiple-arguments
+
