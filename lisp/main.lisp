@@ -2,23 +2,32 @@
 (ql:quickload "assoc-utils" :silent t)
 (use-package :json)
 (use-package :assoc-utils)
-(defun introduce-player (player)
+(load "json-strings.lisp") ; OK, loading a local file was really easy.
+
+(defun verify-player (name win-percent)
+  (and (typep name 'string) (or (typep win-percent 'single-float) (eq win-percent nil))))
+
+(defun introduce (player)
   (let ((name (aget player :name)) (win-percent (aget player :win-percent)))
-    (if win-percent
-      ; Finally got format to work. http://www.gigamonkeys.com/book/a-few-format-recipes.html
-      ; There is other documentation out there that sayso you should use % signs, but that straight-up doesn't work.
-      (format t "~s wins ~d% of the time." name win-percent)
-      (format t "~s is a new player." name))))
+    (if (verify-player name win-percent)
+      (if win-percent
+        ; Finally got format to work. http://www.gigamonkeys.com/book/a-few-format-recipes.html
+        ; There is other documentation out there that sayso you should use % signs, but that straight-up doesn't work.
+        ; You need to use ~d to avoid the interpolated things coming out with quotes around them.
+        ; It's not related to decimals as you might expect from other languages.
+        (format t "~d wins ~d% of the time." name win-percent)
+        (format t "~d is a new player." name))
+      (format t "~s is not a valid player" player))))
 
 (handler-case
-  (introduce-player (decode-json-from-string "{\"name\": \"Nooby McNooberson\", \"winPercent\": 88}"))
+  (introduce (decode-json-from-string rad-json))
   ; Decoding the json creates a list of pairs, or an association list.
+  ; These are also called "dotted pairs."
   ; When you print it out, it looks like ((:NAME . "Nooby McNooberson") (:WIN-PERCENT . 88))
   ; in JS-land that would look like [['name', 'Nooby'], ['winPercent', 85.2]]
   (json-syntax-error (ex) (print ex))
 )
 
-; At this point I've given up on Lisp.
 ; It took too long to get a package manager up and running.
 ; What packages exist for json-schema in Lisp are not published to quicklisp.
 
