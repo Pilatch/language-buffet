@@ -25,6 +25,8 @@
   (println (str "parse error" e))))
 
 ; This compiles to a JavaScript file that is 1.4Mb large, minified.
+; Compare that to Elm, which does the same thing at 67K, (before advanced optimizations),
+; and PureScript at 27K.
 
 ; Gotta recommend that you don't use the official quick start guide, https://clojurescript.org/guides/quick-start
 ; and instead go here - https://github.com/emezeske/lein-cljsbuild/tree/1.1.7/example-projects/simple

@@ -18,7 +18,7 @@ type Player =
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do
   let
-    (parsed :: Either _ Player) = readJSON badJSON
+    (parsed :: Either _ Player) = readJSON gladJSON
     logEitherMyRecord (Left error) = log $ "failed to parse"
     logEitherMyRecord (Right player) =
       case player.winPercent of
@@ -73,3 +73,6 @@ main = do
 -- I can't even get this thing to console.log out a random variable. Apparently I need to find a
 -- custom toString function to make that happen. This is galling becaues in node and in browsers
 -- you can console.log out anything you want.
+
+-- Want to run this in a browser?
+-- https://stackoverflow.com/questions/46403106/how-to-get-from-pulp-init-to-running-code-in-browser
