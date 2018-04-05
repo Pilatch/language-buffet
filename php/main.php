@@ -6,12 +6,10 @@ use JsonSchema\Validator;
 $playerSchema = <<<'JSON'
 {
   "type": "object",
+  "required": ["name", "winPercent"],
   "properties": {
     "winPercent": {
-      "type": [
-        "number",
-        "null"
-      ]
+      "type": ["number", "null"]
     },
     "name": {
       "type": "string"
@@ -20,19 +18,30 @@ $playerSchema = <<<'JSON'
 }
 JSON;
 
-$schemaObject = json_decode($playerSchema);
-$validator = new Validator();
-$player = json_decode($gladJson); // returns null if decoding fails
-$validator->validate($player, $schemaObject);
+$player = json_decode($deadJson); // returns null if decoding fails
 
-if ($validator->isValid()) {
-  if ($player->winPercent) {
-    echo "$player->name wins $player->winPercent% of the time.";
-  } else {
-    echo "$player->name is a new player.";
-  }
+if ($player === null) {
+  echo "JSON parse error.";
+  // Note that json_parse won't report what the parse error is.
 } else {
-  echo "Your player is invalid.";
+  $schemaObject = json_decode($playerSchema);
+  $validator = new Validator();
+  $validator->validate($player, $schemaObject);
+
+  if ($validator->isValid()) {
+    if ($player->winPercent !== null) {
+      echo "$player->name wins $player->winPercent% of the time.";
+    } else {
+      echo "$player->name is a new player.";
+    }
+  } else {
+    echo "Invalid player.\n";
+    foreach ($validator->getErrors() as $error) {
+      // If we wanted to inspect the $error object in full, we would do
+      // var_dump($error);
+      echo sprintf("[%s] %s\n", $error['property'], $error['message']);
+    }
+  }
 }
 
 // json_decode is native to PHP, which makes sense as it's a web language.

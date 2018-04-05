@@ -1,15 +1,17 @@
 package main
 
-// The Go compiler seems pretty neat because I can tell it to both compile and
+// The Go compiler is fast.
+// It also seems pretty neat because I can tell it to both compile and
 // then run in one command without some ridiculous amount of setup like Java.
 // Also it's garbage collected, has pointers, but not pointer math.
 
 import (
-  "encoding/json"
   jsonStrings "./json"
-  "github.com/davecgh/go-spew/spew"
-  "gopkg.in/guregu/null.v3"
+  "encoding/json"
   "fmt"
+  "github.com/davecgh/go-spew/spew"
+  "github.com/xeipuuv/gojsonschema"
+  "gopkg.in/guregu/null.v3"
 )
 
 // Installing a third party library for the first time was not painless.
@@ -25,31 +27,57 @@ func main() {
   }
   // Using a third-party library to handle a nullable float field,
   // but I'm not convinced it's succinct or safe.
-  var m Player
+  playerJson := jsonStrings.GladJson
+  playerSchema := `{
+    "type": "object",
+    "required": ["name", "winPercent"],
+    "properties": {
+      "name": {"type": "string"},
+      "winPercent": {"type": ["number", "null"]}
+    }
+  }`
+  playerLoader := gojsonschema.NewStringLoader(playerJson)
+  schemaLoader := gojsonschema.NewStringLoader(playerSchema)
 
-  // Passing a reference to an existing variable seems like a silly way
-  // for a function to perform its duty, and reminds me of PHP.
-  err := json.Unmarshal([]byte(jsonStrings.GoodJson), &m)
+  validationResult, validationErr := gojsonschema.Validate(schemaLoader, playerLoader)
+  if validationErr != nil {
+    // We could use the panic() function to crash the program if we wanted to.
+    fmt.Printf("Error parsing player JSON %v", validationErr.Error())
+  } else if validationResult.Valid() {
+    var player Player
 
-  if err != nil {
+    json.Unmarshal([]byte(playerJson), &player)
+    // Passing a reference to an existing variable seems like a silly way
+    // for a function to perform its duty, and reminds me of PHP.
     // If the JSON is malformed, as in BadJson, the program will not bomb out.
     // It will return an error though.
-    // In that case the variable m will have its initial values 0, 0, and "".
+    // We don't capture that error because we assume our validator would have detected it already.
+    // In that case the variable player would have its initial values 0, 0, and "".
     // RadJson is valid, but has no fields that match the Player struct.
-    // Then err is nil, but m has its initial values.
+    // Then unmarshalErr would be nil, but player has its initial values.
     // This is similar to how it's handled in Google Gson.
     // Using SadJson will result in an unmarshal error trying to convert bool to null.Float.
-    // TODO add schema validation to ensure we have the expected data structure.
-    spew.Dump(m) // You need a third-party library to easily inspect your structs.
-    panic(err)
-  } else if m.WinPercent.Valid { // So, a null is invalid I guess in this library.
-    fmt.Printf("%v wins %v%% of the time.", m.Name, m.WinPercent.Float64)
+    // So unmarshaling to a Player instance is not enough to ensure correctness. We need the validator above.
+    // To see these results I had to use a third-party library to easily inspect the struct.
+    // That meant importing the following:
+    // "github.com/davecgh/go-spew/spew"
+    // And then calling the following in the code:
+    // spew.Dump(player)
+
+    if player.WinPercent.Valid { // A null is invalid I guess in this library.
+      fmt.Printf("%v wins %v%% of the time.", player.Name, player.WinPercent.Float64)
+    } else {
+      fmt.Printf("%v is a new player.", player.Name)
+    }
+    // Inspecting the Unmarshaled GoodJson shows that the null was converted
+    // to a zero for the float. For my program to understand that I could have a float or null
+    // in a certain field, apparently I'd need to create a nullable float type,
+    // but that's not the end of the story. There are further gotchas according to this discussion.
+    // https://groups.google.com/forum/#!topic/golang-nuts/JOFWAqrTbUs
   } else {
-    fmt.Printf("%v is a new player.", m.Name)
+    fmt.Printf("Invalid player.")
+    // If we instead did fmt.Printf("Invalid player. %v", validationResult)
+    // It would output something like Invalid player. &{[0xc42008e410 0xc42008e4b0] 0}
+    spew.Dump(validationResult.Errors())
   }
-  // Inspecting the Unmarshaled GoodJson shows that the null was converted
-  // to a zero for the float. For my program to understand that I could have a float or null
-  // in a certain field, apparently I'd need to create a nullable float type,
-  // but that's not the end of the story. There are further gotchas according to this discussion.
-  // https://groups.google.com/forum/#!topic/golang-nuts/JOFWAqrTbUs
 }

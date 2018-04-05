@@ -1,15 +1,6 @@
 package com.pennmutual;
 
 class JsonStrings {
-	
-  static String playerSchema =
-"  {" +
-"      \"type\": \"object\"," +
-"      \"properties\": {" +
-"          \"name\": {\"type\": \"string\"}," +
-"          \"winPercent\": {\"type\": [\"number\", \"null\"]}" +
-"      }" +
-"  }";
 
 	
   static String goodJson =

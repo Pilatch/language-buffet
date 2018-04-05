@@ -1,10 +1,5 @@
 // No heredocs in C, but string concatenation is easy.
 
-const char * player_schema = "{"
-  "\"name\": null,"
-  "\"winPercent\": null"
-"}";
-
 const char * good_json = "{"
   "\"name\": \"Nooby McNooberson\","
   "\"winPercent\": null"

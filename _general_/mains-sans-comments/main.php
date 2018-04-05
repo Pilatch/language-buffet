@@ -6,12 +6,10 @@ use JsonSchema\Validator;
 $playerSchema = <<<'JSON'
 {
   "type": "object",
+  "required": ["name", "winPercent"],
   "properties": {
     "winPercent": {
-      "type": [
-        "number",
-        "null"
-      ]
+      "type": ["number", "null"]
     },
     "name": {
       "type": "string"
@@ -20,17 +18,25 @@ $playerSchema = <<<'JSON'
 }
 JSON;
 
-$schemaObject = json_decode($playerSchema);
-$validator = new Validator();
-$player = json_decode($gladJson);
-$validator->validate($player, $schemaObject);
+$player = json_decode($deadJson);
 
-if ($validator->isValid()) {
-  if ($player->winPercent) {
-    echo "$player->name wins $player->winPercent% of the time.";
-  } else {
-    echo "$player->name is a new player.";
-  }
+if ($player === null) {
+  echo "JSON parse error.";
 } else {
-  echo "Your player is invalid.";
+  $schemaObject = json_decode($playerSchema);
+  $validator = new Validator();
+  $validator->validate($player, $schemaObject);
+
+  if ($validator->isValid()) {
+    if ($player->winPercent !== null) {
+      echo "$player->name wins $player->winPercent% of the time.";
+    } else {
+      echo "$player->name is a new player.";
+    }
+  } else {
+    echo "Invalid player.\n";
+    foreach ($validator->getErrors() as $error) {
+      echo sprintf("[%s] %s\n", $error['property'], $error['message']);
+    }
+  }
 }

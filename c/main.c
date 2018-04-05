@@ -7,8 +7,13 @@
 
 int main()
 {
+  const char * player_schema = "{"
+    "\"name\": null,"
+    "\"winPercent\": null"
+  "}";
+
   JSON_Value *schema = json_parse_string(player_schema);
-  JSON_Value *player_value = json_parse_string(good_json);
+  JSON_Value *player_value = json_parse_string(glad_json);
   int validation_result = json_validate(schema, player_value);
 
   if (validation_result == JSONError || player_value == NULL) { // being extra safe with that null check
@@ -53,6 +58,7 @@ int main()
 
 // My experience with this little exercise has been quite different from what I expected.
 // The compiler is mostly friendly once you know the magic formula for verbosity.
+// However GCC is a little slower than I expected, compared to Go.
 // Using the <code>clib</code> package manager was fast and easy.
 // Including a dependency was as simple as including my own source file.
 // The syntax is easy to understand because, duh, it's where C-like syntax comes from!

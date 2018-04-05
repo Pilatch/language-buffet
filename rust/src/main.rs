@@ -28,7 +28,7 @@ struct Player {
 fn main() {
   // This will not throw an error when parsing fails as it returns a Result which can be Ok|Err.
 
-  let parsed: Result<Player, Error> = serde_json::from_str(&json_strings::good());
+  let parsed: Result<Player, Error> = serde_json::from_str(&json_strings::rad());
 
   match parsed {
     Ok(player) =>

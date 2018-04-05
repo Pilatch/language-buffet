@@ -13,10 +13,16 @@ pub fn good() -> String {
 }
 
 pub fn glad() -> String {
-  // There's nothing intuitive about r#"..."
   r#"{
     "name": "Mikhail Tal",
     "winPercent": 85.2
+  }"#.to_string()
+}
+
+pub fn dead() -> String {
+  r#"{
+    "name": "Never McWonAGame",
+    "winPercent": 0
   }"#.to_string()
 }
 
@@ -31,5 +37,12 @@ pub fn bad() -> String {
   r#"{
     "name": "Nooby McNoobington",
     'winPercent': 13.3
+  }"#.to_string()
+}
+
+pub fn rad() -> String {
+  r#"{
+    "foo": "Nooby McNoobington",
+    "baz": 13.3
   }"#.to_string()
 }

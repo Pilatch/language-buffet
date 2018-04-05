@@ -2,7 +2,7 @@ module Main exposing (main)
 
 import Html exposing (text)
 import JsonStrings exposing (..)
-import Json.Decode as Decode exposing (..)
+import Json.Decode exposing (..)
 import String.Interpolate exposing (interpolate)
 
 
@@ -18,10 +18,10 @@ main =
 
 
 decodePlayer =
-    Decode.map2 Player
-        (field "name" string)
-        (field "winPercent" (nullable float))
-        |> decodeString
+    decodeString <|
+        map2 Player
+            (field "name" string)
+            (field "winPercent" (nullable float))
 
 
 introduce result =
@@ -35,4 +35,4 @@ introduce result =
                     interpolate "{0} wins {1}% of the time." [ player.name, toString percentage ]
 
         Err message ->
-            "Here's what went wrong: " ++ message
+            "Error decoding player: " ++ message

@@ -1,11 +1,12 @@
 package main
 
 import (
-  "encoding/json"
   jsonStrings "./json"
-  "github.com/davecgh/go-spew/spew"
-  "gopkg.in/guregu/null.v3"
+  "encoding/json"
   "fmt"
+  "github.com/davecgh/go-spew/spew"
+  "github.com/xeipuuv/gojsonschema"
+  "gopkg.in/guregu/null.v3"
 )
 
 func main() {
@@ -13,16 +14,34 @@ func main() {
     Name string
     WinPercent null.Float
   }
-  var m Player
+  playerJson := jsonStrings.GladJson
+  playerSchema := `{
+    "type": "object",
+    "required": ["name", "winPercent"],
+    "properties": {
+      "name": {"type": "string"},
+      "winPercent": {"type": ["number", "null"]}
+    }
+  }`
+  playerLoader := gojsonschema.NewStringLoader(playerJson)
+  schemaLoader := gojsonschema.NewStringLoader(playerSchema)
 
-  err := json.Unmarshal([]byte(jsonStrings.GoodJson), &m)
+  validationResult, validationErr := gojsonschema.Validate(schemaLoader, playerLoader)
+  if validationErr != nil {
+    fmt.Printf("Error parsing player JSON %v", validationErr.Error())
+  } else if validationResult.Valid() {
+    var player Player
 
-  if err != nil {
-    spew.Dump(m)
-    panic(err)
-  } else if m.WinPercent.Valid {
-    fmt.Printf("%v wins %v%% of the time.", m.Name, m.WinPercent.Float64)
+    json.Unmarshal([]byte(playerJson), &player)
+
+    if player.WinPercent.Valid {
+      fmt.Printf("%v wins %v%% of the time.", player.Name, player.WinPercent.Float64)
+    } else {
+      fmt.Printf("%v is a new player.", player.Name)
+    }
+
   } else {
-    fmt.Printf("%v is a new player.", m.Name)
+    fmt.Printf("Invalid player.")
+    spew.Dump(validationResult.Errors())
   }
 }

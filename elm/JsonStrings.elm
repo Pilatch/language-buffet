@@ -17,6 +17,14 @@ gladJson =
     } """
 
 
+deadJson : String
+deadJson =
+    """ {
+        "name": "Never McWonAGame",
+        "winPercent": 0
+    } """
+
+
 sadJson : String
 sadJson =
     """ {

@@ -5,6 +5,11 @@ $goodJson = '{
   "winPercent": null
 }';
 
+$deadJson = '{
+  "name": "Never McWonAGame",
+  "winPercent": 0
+}';
+
 $gladJson = '{
   "name": "Mikhail Tal",
   "winPercent": 85.2

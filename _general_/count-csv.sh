@@ -6,7 +6,7 @@ for f in $(ls $mainsDir)
 do
   filename=$(basename -- "$f")
   extension="${f##*.}"
-  nonBlankLines=$(cat $mainsDir/$f | sed '/^\s*$/d' | wc -l)
-  characters=$(cat $mainsDir/$f | sed '/^\s*$/d' | wc -c)
-  echo $extension,$nonBlankLines,$characters >> $outFile
+  lines=$(cat $mainsDir/$f | sed '/^\s*$/d' | wc -l)
+  characters=$(cat $mainsDir/$f | tr -d '[:space:] ' | wc -c)
+  echo $extension,$lines,$characters >> $outFile
 done

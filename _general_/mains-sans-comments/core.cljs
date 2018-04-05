@@ -10,7 +10,7 @@
    (s/required-key :winPercent) [s/Num]})
 
 (try
-  (def player (js->clj (.parse js/JSON jsonstrings/rad) :keywordize-keys true))
+  (def player (js->clj (.parse js/JSON jsonstrings/glad) :keywordize-keys true))
   (try
     (s/validate PlayerSchema player)
     (if (player :winPercent)

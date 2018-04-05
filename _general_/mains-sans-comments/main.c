@@ -4,6 +4,11 @@
 
 int main()
 {
+  const char * player_schema = "{"
+    "\"name\": null,"
+    "\"winPercent\": null"
+  "}";
+
   JSON_Value *schema = json_parse_string(player_schema);
   JSON_Value *player_value = json_parse_string(good_json);
   int validation_result = json_validate(schema, player_value);

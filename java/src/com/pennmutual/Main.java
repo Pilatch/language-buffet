@@ -13,6 +13,10 @@ import com.github.fge.jsonschema.core.report.ProcessingReport;
 import com.github.fge.jsonschema.main.JsonSchema;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
 
+// This is the one language that I felt the express need to use an IDE for.
+// Transforming JSON to a Java object is much like Go in that
+// you need a schema validator. Otherwise you get data-type defaults
+// if the fields you expect are absent.
 
 public class Main {
 
@@ -20,6 +24,15 @@ public class Main {
     String name;
     Float winPercent;
   }
+
+  static String playerSchema =
+"  {" +
+"      \"type\": \"object\"," +
+"      \"properties\": {" +
+"          \"name\": {\"type\": \"string\"}," +
+"          \"winPercent\": {\"type\": [\"number\", \"null\"]}" +
+"      }" +
+"  }";
 
   static void introduce(Player player) {
     if (player.winPercent == null) {
@@ -32,18 +45,17 @@ public class Main {
   static boolean isValidPlayer(String playerJson) {
     ObjectMapper mapper = new ObjectMapper();
     try {
-      JsonNode playerSchemaNode = mapper.readTree(JsonStrings.playerSchema);
+      JsonNode playerSchemaNode = mapper.readTree(playerSchema);
       JsonNode playerNode = mapper.readTree(playerJson);
-        JsonSchemaFactory factory = JsonSchemaFactory.byDefault();
-        JsonSchema schema = factory.getJsonSchema(playerSchemaNode);
-        ProcessingReport report;
-        report = schema.validate(playerNode);
-        if (report.isSuccess()) {
-          return true;
-        }
+      JsonSchemaFactory factory = JsonSchemaFactory.byDefault();
+      JsonSchema schema = factory.getJsonSchema(playerSchemaNode);
+      ProcessingReport report = schema.validate(playerNode);
+      if (report.isSuccess()) {
+        return true;
+      }
 
-        System.err.println(report);
-        return false;
+      System.err.println(report);
+      return false;
     } catch (IOException ioe) {
       System.err.println("IO Error " + ioe);
       return false;

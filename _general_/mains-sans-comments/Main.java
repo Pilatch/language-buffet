@@ -21,6 +21,15 @@ public class Main {
     Float winPercent;
   }
 
+  static String playerSchema =
+"  {" +
+"      \"type\": \"object\"," +
+"      \"properties\": {" +
+"          \"name\": {\"type\": \"string\"}," +
+"          \"winPercent\": {\"type\": [\"number\", \"null\"]}" +
+"      }" +
+"  }";
+
   static void introduce(Player player) {
     if (player.winPercent == null) {
       System.out.println(String.format("%s is a new player.", player.name));
@@ -32,18 +41,17 @@ public class Main {
   static boolean isValidPlayer(String playerJson) {
     ObjectMapper mapper = new ObjectMapper();
     try {
-      JsonNode playerSchemaNode = mapper.readTree(JsonStrings.playerSchema);
+      JsonNode playerSchemaNode = mapper.readTree(playerSchema);
       JsonNode playerNode = mapper.readTree(playerJson);
-        JsonSchemaFactory factory = JsonSchemaFactory.byDefault();
-        JsonSchema schema = factory.getJsonSchema(playerSchemaNode);
-        ProcessingReport report;
-        report = schema.validate(playerNode);
-        if (report.isSuccess()) {
-          return true;
-        }
+      JsonSchemaFactory factory = JsonSchemaFactory.byDefault();
+      JsonSchema schema = factory.getJsonSchema(playerSchemaNode);
+      ProcessingReport report = schema.validate(playerNode);
+      if (report.isSuccess()) {
+        return true;
+      }
 
-        System.err.println(report);
-        return false;
+      System.err.println(report);
+      return false;
     } catch (IOException ioe) {
       System.err.println("IO Error " + ioe);
       return false;
