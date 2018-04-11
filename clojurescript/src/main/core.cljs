@@ -1,6 +1,6 @@
 (ns main.core
   (:require [main.jsonstrings :as jsonstrings]
-    [schema.core :as s :include-macros true]))
+            [schema.core :as s :include-macros true]))
 ; The require call will silently fail if you have more than one of them,
 ; then only the last thingy you require will actually get loaded!
 ; This ate probably five hours of my life.
@@ -21,8 +21,8 @@
       (println (str (player :name) " is a new player.")))
     (catch js/Error e
       (println (str "validation error" e))))
-(catch js/Error e
-  (println (str "parse error" e))))
+  (catch js/Error e
+    (println (str "parse error" e))))
 
 ; This compiles to a JavaScript file that is 1.4Mb large, minified.
 ; Compare that to Elm, which does the same thing at 67K, (before advanced optimizations),
@@ -69,6 +69,9 @@
 ; So you could have your build script use that.
 ; The documentation at clojurescript.org suggests you just download your dependency to the project directory.
 ; https://clojurescript.org/reference/dependencies#consuming-clojurescript-code
+
+; I used this lein plugin to format the code.
+; https://github.com/weavejester/cljfmt
 
 ; There's a thing called Reagent which allows you to write your React app in Clojurescript.
 ; https://github.com/reagent-project/reagent

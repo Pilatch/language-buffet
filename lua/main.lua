@@ -12,7 +12,7 @@ local playerValidator = jsonschema.generate_validator {
 }
 
 function introduce()
-  local player = JSON:decode(radJson)
+  local player = JSON:decode(gladJson)
   local isValid = playerValidator(player)
 
   if isValid then

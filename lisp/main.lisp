@@ -5,7 +5,10 @@
 (load "json-strings.lisp") ; OK, loading a local file was really easy.
 
 (defun verify-player (name win-percent)
-  (and (typep name 'string) (or (typep win-percent 'single-float) (eq win-percent nil))))
+  (and (typep name 'string) (or (numberp win-percent) (eq win-percent nil))))
+  ; If you try to check that winPercent is a float, when in the JSON it's represented by 0,
+  ; you're going to have a bad time. That looks like:
+  ; (typep win-percent 'single-float)
 
 (defun introduce (player)
   (let ((name (aget player :name)) (win-percent (aget player :win-percent)))
@@ -20,13 +23,12 @@
       (format t "~s is not a valid player" player))))
 
 (handler-case
-  (introduce (decode-json-from-string rad-json))
+  (introduce (decode-json-from-string dead-json))
   ; Decoding the json creates a list of pairs, or an association list.
   ; These are also called "dotted pairs."
   ; When you print it out, it looks like ((:NAME . "Nooby McNooberson") (:WIN-PERCENT . 88))
   ; in JS-land that would look like [['name', 'Nooby'], ['winPercent', 85.2]]
-  (json-syntax-error (ex) (print ex))
-)
+  (json-syntax-error (ex) (print ex)))
 
 ; It took too long to get a package manager up and running.
 ; What packages exist for json-schema in Lisp are not published to quicklisp.

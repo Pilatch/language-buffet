@@ -7,6 +7,10 @@ defmodule Json_Strings do
     ~s({"name": "Mikhail Tal", "winPercent": 85.2})
   end
 
+  def dead do
+    ~s({"name": "Never McWonAGame", "winPercent": 0})
+  end
+
   def sad do
     ~s({"name": "Nooby McNooberson", "winPercent": false})
   end

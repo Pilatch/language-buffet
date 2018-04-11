@@ -1,5 +1,13 @@
 var ajv = new require('ajv')(); // Why is this difficult to add a type annotation to?
 var jsonStrings = require('./jsonStrings');
+var playerSchema = {
+    type: 'object',
+    required: ['name', 'winPercent'],
+    properties: {
+        name: { type: 'string' },
+        winPercent: { type: ['number', 'null'] }
+    }
+};
 function introduce(player) {
     if (player.winPercent) {
         console.log(player.name + " wins " + player.winPercent + "% of the time.");
@@ -9,14 +17,6 @@ function introduce(player) {
     }
 }
 try {
-    var playerSchema = {
-        'type': 'object',
-        'required': ['name', 'winPercent'],
-        'properties': {
-            'name': { 'type': 'string' },
-            'winPercent': { 'type': ['number', 'null'] }
-        }
-    };
     var player = JSON.parse(jsonStrings.goodJson); // We claim this returns a Player, but TypeScript provides no guarantee.
     var isValid = ajv.validate(playerSchema, player); // Here's the guarantee, but that's tied to the playerSchema, not the Player interface.
     if (isValid) {

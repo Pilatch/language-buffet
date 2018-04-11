@@ -1,6 +1,6 @@
 (ns main.core
   (:require [main.jsonstrings :as jsonstrings]
-    [schema.core :as s :include-macros true]))
+            [schema.core :as s]))
 
 (enable-console-print!)
 
@@ -10,7 +10,7 @@
    (s/required-key :winPercent) [s/Num]})
 
 (try
-  (def player (js->clj (.parse js/JSON jsonstrings/glad) :keywordize-keys true))
+  (def player (js->clj (.parse js/JSON jsonstrings/good) :keywordize-keys true))
   (try
     (s/validate PlayerSchema player)
     (if (player :winPercent)
@@ -18,5 +18,5 @@
       (println (str (player :name) " is a new player.")))
     (catch js/Error e
       (println (str "validation error" e))))
-(catch js/Error e
-  (println (str "parse error" e))))
+  (catch js/Error e
+    (println (str "parse error" e))))

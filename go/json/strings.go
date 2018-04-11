@@ -10,8 +10,13 @@ var GladJson = ` {
     "winPercent": 85.2
 } `
 
+var DeadJson = ` {
+    "name": "Never McWonAGame",
+    "winPercent": 0
+} `
+
 var SadJson = ` {
-    "name": "BNooby McNoobington",
+    "name": "Nooby McNoobington",
     "winPercent": false
 } `
 

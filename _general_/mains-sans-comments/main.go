@@ -9,11 +9,21 @@ import (
   "gopkg.in/guregu/null.v3"
 )
 
-func main() {
-  type Player struct {
-    Name string
-    WinPercent null.Float
+type Player struct {
+  Name       string
+  WinPercent null.Float
+}
+
+func introduce(player Player) {
+  if player.WinPercent.Valid {
+    fmt.Printf("%v wins %v%% of the time.", player.Name, player.WinPercent.Float64)
+  } else {
+    fmt.Printf("%v is a new player.", player.Name)
   }
+
+}
+
+func main() {
   playerJson := jsonStrings.GladJson
   playerSchema := `{
     "type": "object",
@@ -28,20 +38,18 @@ func main() {
 
   validationResult, validationErr := gojsonschema.Validate(schemaLoader, playerLoader)
   if validationErr != nil {
+
     fmt.Printf("Error parsing player JSON %v", validationErr.Error())
   } else if validationResult.Valid() {
     var player Player
 
     json.Unmarshal([]byte(playerJson), &player)
 
-    if player.WinPercent.Valid {
-      fmt.Printf("%v wins %v%% of the time.", player.Name, player.WinPercent.Float64)
-    } else {
-      fmt.Printf("%v is a new player.", player.Name)
-    }
+    introduce(player)
 
   } else {
     fmt.Printf("Invalid player.")
+
     spew.Dump(validationResult.Errors())
   }
 }

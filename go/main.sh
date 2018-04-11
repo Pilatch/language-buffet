@@ -1,1 +1,1 @@
-go build main.go && ./main
+gofmt -w main.go && go build main.go && ./main

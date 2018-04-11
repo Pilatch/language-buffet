@@ -2,8 +2,7 @@
 #include "deps/parson/parson.c"
 #include "json_strings.c"
 
-int main()
-{
+int main() {
   const char * player_schema = "{"
     "\"name\": null,"
     "\"winPercent\": null"

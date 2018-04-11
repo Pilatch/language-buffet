@@ -1,1 +1,1 @@
-mix run main.exs
+mix format main.exs && mix run main.exs

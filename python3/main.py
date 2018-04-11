@@ -1,18 +1,9 @@
 import json
 from jsonschema import validate
 from jsonschema.exceptions import ValidationError
-from jsonStrings import goodJson, gladJson, sadJson, badJson
+from json_strings import *
 
-
-def introduce(player):
-    if player["winPercent"]:
-        print("{:s} wins {:f}% of the time.".format(
-            player["name"], player["winPercent"]))
-    else:
-        print("{:s} is a new player.".format(player["name"]))
-
-
-playerSchema = {
+schema = {
     "type": "object",
     "required": ["name", "winPercent"],
     "properties": {
@@ -21,18 +12,31 @@ playerSchema = {
     },
 }
 
+
+def introduce(player):
+    if player["winPercent"] is not None:
+        print("{:s} wins {:f}% of the time."
+              .format(
+                  player["name"],
+                  player["winPercent"]))
+    else:
+        print("{:s} is a new player."
+              .format(player["name"]))
+
+
 try:
-    loadedPlayer = json.loads(goodJson)
+    player = json.loads(good_json)
 
     try:
-        validate(loadedPlayer, playerSchema)
-        introduce(loadedPlayer)
+        validate(player, schema)
+        introduce(player)
 
-    except ValidationError as validationError:
-        print(validationError)
+    except ValidationError as validation_error:
+        print("Invalid player", validation_error)
 
-except json.decoder.JSONDecodeError as decodeError:
-    print(decodeError)
+except json.decoder.JSONDecodeError as decode_error:
+    print("JSON parse error", decode_error)
+
 
 # This was easy.
 # Formatted using PEP8.

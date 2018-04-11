@@ -3,27 +3,34 @@ require 'json-schema'
 require_relative './JsonStrings'
 
 schema = {
-  'type' => 'object',
-  'required' => ['name', 'winPercent'],
-  'properties' => {
-    'name' => {'type' => 'string'},
-    'winPercent' => {'type' => ['number', 'null']}
+  type: 'object',
+  required: ['name', 'winPercent'],
+  properties: {
+    name: {type: 'string'},
+    winPercent: {type: ['number', 'null']},
   }
 }
 
+def introduce player
+  puts "#{player['name']} " + # every statement returns
+  # player is a hash so use this syntax rather than a dot.
+
+  if player['winPercent'].nil? then
+    "is a new player."
+  else
+    "wins #{player['winPercent']}\% of the time."
+  end
+end
+
 begin
-  player_hash = JSON.parse(glad_json)
-  validation_errors = JSON::Validator.fully_validate(schema, player_hash)
+  player = JSON.parse(dead_json)
+  validation_errors =
+    JSON::Validator.fully_validate(schema, player)
 
   if validation_errors.count == 0 then
-    puts "#{player_hash['name']} " + # every statement returns
-    if player_hash['winPercent'].nil? then
-      "is a new player."
-    else
-      "wins #{player_hash['winPercent']}\% of the time."
-    end
+    introduce player
   else
-    puts "player_hash is not valid because #{validation_errors}"
+    puts "Invalid player #{validation_errors}"
   end
 rescue JSON::ParserError => error
   puts "JSON parse error #{error}"
@@ -44,7 +51,7 @@ end
 # How to find - https://holymonkey.com/how-to-find-and-fix-a-memory-leak-in-a-ruby-c-extension.html
 # Leaky gems - https://github.com/ASoftCo/leaky-gems
 
-# There are problems with installing gems on OS X because that comes with
+# I had problems with installing gems on OS X because that comes with
 # a version of Ruby, 2.0.0p648, and you don't want to install gems via sudo because they'll go to /usr/bin.
 # To get around this we use RVM, which you should be using anyway, but the installation
 # is janky and may require you use a different GPG key server.
@@ -52,3 +59,4 @@ end
 # Once you have that working you can install bundler, which is the package manager of choice.
 # But nothing seems to work for me. Asked a question -
 # https://stackoverflow.com/questions/49078366/cant-install-ruby-gem-on-macos-sierra10-12-6-even-with-rvm-or-sudo?noredirect=1#comment85163428_49078366
+#

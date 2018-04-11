@@ -1,5 +1,13 @@
 const ajv = new require('ajv')() // Why is this difficult to add a type annotation to?
 const jsonStrings = require('./jsonStrings')
+const playerSchema = {
+  type: 'object',
+  required: ['name', 'winPercent'],
+  properties: {
+    name: {type: 'string'},
+    winPercent: {type: ['number', 'null']},
+  },
+}
 
 interface Player {
   name: string
@@ -15,14 +23,6 @@ function introduce(player : Player) {
 }
 
 try {
-  const playerSchema = { // The ajv typings don't provide an interface for our schema.
-    'type': 'object',
-    'required': ['name', 'winPercent'],
-    'properties': {
-        'name': {'type': 'string'},
-        'winPercent': {'type': ['number', 'null']},
-    },
-  }
   const player: Player = JSON.parse(jsonStrings.goodJson) // We claim this returns a Player, but TypeScript provides no guarantee.
   const isValid: boolean = ajv.validate(playerSchema, player) // Here's the guarantee, but that's tied to the playerSchema, not the Player interface.
 

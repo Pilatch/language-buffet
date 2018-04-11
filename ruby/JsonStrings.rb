@@ -16,6 +16,15 @@ def glad_json
   EOF
 end
 
+def dead_json
+  <<-EOF
+  {
+    "name": "Never McWonAGame",
+    "winPercent": 0
+  }
+  EOF
+end
+
 def sad_json
   <<-EOF
   {

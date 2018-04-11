@@ -1,5 +1,13 @@
 const ajv = new require('ajv')()
 const jsonStrings = require('./jsonStrings')
+const playerSchema = {
+  type: 'object',
+  required: ['name', 'winPercent'],
+  properties: {
+    name: {type: 'string'},
+    winPercent: {type: ['number', 'null']},
+  },
+}
 
 interface Player {
   name: string
@@ -15,14 +23,6 @@ function introduce(player : Player) {
 }
 
 try {
-  const playerSchema = {
-    'type': 'object',
-    'required': ['name', 'winPercent'],
-    'properties': {
-        'name': {'type': 'string'},
-        'winPercent': {'type': ['number', 'null']},
-    },
-  }
   const player: Player = JSON.parse(jsonStrings.goodJson)
   const isValid: boolean = ajv.validate(playerSchema, player)
 

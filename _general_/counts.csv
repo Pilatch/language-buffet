@@ -1,17 +1,17 @@
-extension,non-blank lines,characters
-rs,24,483
-hs,20,513
-cljs,19,545
-elm,27,573
-exs,29,579
-lua,28,582
-lisp,18,589
-js,28,601
-rb,27,601
-purs,23,651
-ts,32,669
-py,27,683
-php,38,718
-c,26,748
-go,41,964
-java,65,1762
+Extension,Non-blank Lines,Characters
+elm, 27, 573
+java, 65, 1762
+purs, 23, 651
+cljs, 19, 526
+c, 25, 748
+exs, 42, 710
+go, 44, 1010
+hs, 20, 513
+js, 28, 585
+lisp, 17, 578
+lua, 28, 583
+php, 38, 718
+py, 27, 652
+rb, 30, 587
+rs, 24, 483
+ts, 32, 655

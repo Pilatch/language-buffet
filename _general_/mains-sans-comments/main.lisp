@@ -5,7 +5,7 @@
 (load "json-strings.lisp")
 
 (defun verify-player (name win-percent)
-  (and (typep name 'string) (or (typep win-percent 'single-float) (eq win-percent nil))))
+  (and (typep name 'string) (or (numberp win-percent) (eq win-percent nil))))
 
 (defun introduce (player)
   (let ((name (aget player :name)) (win-percent (aget player :win-percent)))
@@ -17,5 +17,4 @@
 
 (handler-case
   (introduce (decode-json-from-string good-json))
-  (json-syntax-error (ex) (print ex))
-)
+  (json-syntax-error (ex) (print ex)))

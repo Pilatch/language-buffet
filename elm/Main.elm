@@ -25,6 +25,7 @@ main =
         |> text
 
 
+decodePlayer : String -> Result String Player
 decodePlayer =
     -- map2 returns a Decoder.
     -- http://package.elm-lang.org/packages/elm-lang/core/5.1.1/Json-Decode#map2

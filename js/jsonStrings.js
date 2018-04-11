@@ -7,6 +7,10 @@ module.exports = {
       "name": "Mikhail Tal",
       "winPercent": 85.2
   } `,
+  deadJson: ` {
+      "name": "Never McWonAGame",
+      "winPercent": 0
+  } `,
   sadJson: ` {
       "name": "Nooby McNooberson",
       "winPercent": false

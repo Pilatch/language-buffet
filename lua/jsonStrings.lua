@@ -8,6 +8,11 @@ gladJson = [[ {
   "winPercent": 85.2
 } ]]
 
+deadJson = [[ {
+  "name": "Never McWonAGame",
+  "winPercent": 0
+} ]]
+
 sadJson = [[ {
   "name": "Nooby McNooberson",
   "winPercent": false
@@ -16,4 +21,9 @@ sadJson = [[ {
 badJson = [[ {
   "name": "Nooby McNooberson",
   'winPercent': null
+} ]]
+
+radJson = [[ {
+  "foo": "Nooby McNooberson",
+  "bar": 33
 } ]]
