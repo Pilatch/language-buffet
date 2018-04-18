@@ -13,7 +13,7 @@ class Player {
 class JsonTest {
     static void main(String[] args) {
         try {
-            Player player = new JsonSlurper().parseText(JsonStrings.radJson)
+            Player player = new JsonSlurper().parseText(JsonStrings.goodJson)
 
             if (player.winPercent != null)
                 println "$player.name wins $player.winPercent% of the time"
