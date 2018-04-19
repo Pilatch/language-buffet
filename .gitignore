@@ -7,6 +7,11 @@ elixir/_build
 
 elm/elm-stuff
 
+
+groovy/.gradle/
+groovy/build
+
+
 haskell/*.dyn_hi
 haskell/*.dyn_o
 haskell/*.hi
