@@ -6,7 +6,7 @@ repositories {
 
     jcenter()
     mavenLocal()
-  
+
 }
 
 
@@ -16,6 +16,6 @@ dependencies {
 
 
 task execute(type:JavaExec) {
-   main = 'JsonTest'
+   main = 'Main'
    classpath = sourceSets.main.runtimeClasspath
 }
