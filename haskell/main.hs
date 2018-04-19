@@ -13,16 +13,17 @@ data Player = Player
   , winPercent :: Maybe Float
   } deriving (Show, Generic, FromJSON)
 
+introduce player = do
+  case winPercent player of
+    Nothing -> print $ (name player) ++ " is a new player."
+    Just winPercent ->
+      print $ (name player) ++ " wins " ++ (show winPercent) ++ "% of the time."
+
 main = do
   result <- (eitherDecode <$> jsonToDecode) :: IO (Either String Player)
   case result of
-    Left err -> print err
-    Right player ->
-      case winPercent player of
-        Nothing -> print $ (name player) ++ " is a new player."
-        Just winPercent ->
-          print $
-          (name player) ++ " wins " ++ (show winPercent) ++ "% of the time."
+    Left err     -> print $ "Here's what went wrong\n\n" ++ err
+    Right player -> introduce player
 -- Where did that name function come from? It was derived via the Generic macro, I think.
 -- It's effectively an accessor. Same would happen for the winPercent field, but in the pattern matching
 -- against the Just constructor, the variable winPercent is in scope when it gets printed out.

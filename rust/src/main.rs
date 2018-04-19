@@ -6,10 +6,9 @@ extern crate serde_json;
 // https://doc.rust-lang.org/1.7.0/book/macros.html
 #[macro_use]
 extern crate serde_derive;
-use serde_json::Error;
 mod json_strings;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Deserialize)]
 struct Player {
     name: String,
     winPercent: Option<f32>, // holy moly, I can have a "nullable" float and it was easy to define.
@@ -25,23 +24,24 @@ struct Player {
 // Rust has no exceptions as those do not play well with multi-threading,
 // complicate understanding of flow-control, and don't leverage the type system as intended.
 
+fn introduce (player: Player) {
+  match player.winPercent {
+    Some(win_percent) =>
+      println!("{} wins {:?}% of the time.", player.name, win_percent),
+      // The funky Elvis operator in the first argument of println! is what allows us to pass a Result
+      // as the second argument, rather than a String. This is helpful for debugging purposes.
+
+    None =>
+      println!("{} is a new player.", player.name),
+    }
+}
+
 fn main() {
   // This will not throw an error when parsing fails as it returns a Result which can be Ok|Err.
 
-  let parsed: Result<Player, Error> = serde_json::from_str(&json_strings::rad());
-
-  match parsed {
-    Ok(player) =>
-      match player.winPercent {
-        Some(win_percent) =>
-          println!("{} wins {:?}% of the time.", player.name, win_percent),
-          // The funky Elvis operator in the first argument of println! is what allows us to pass a Result
-          // as the second argument, rather than a String. This is helpful for debugging purposes.
-
-        None =>
-          println!("{} is a new player.", player.name),
-      }
-    Err(err) => println!("Oh no! {}", err),
+  match serde_json::from_str(&json_strings::glad()) {
+    Ok(player) => introduce(player),
+    Err(err) => println!("Here's what went wrong. \n\n{}", err),
       // println! ends with a bang because it's a macro,
       // which "expands to something" type-safe at compile time.
       // Macros can do things functions cannot, such as cause a wrapping function

@@ -1,17 +1,18 @@
 Extension,Non-blank Lines,Characters
 elm, 27, 573
+groovy, 26, 497
 java, 65, 1762
 purs, 23, 651
 cljs, 19, 526
 c, 25, 748
 exs, 42, 710
 go, 44, 1010
-hs, 20, 513
+hs, 20, 574
 js, 28, 585
 lisp, 17, 578
 lua, 28, 583
 php, 38, 718
 py, 27, 652
 rb, 30, 587
-rs, 24, 483
+rs, 24, 479
 ts, 32, 655

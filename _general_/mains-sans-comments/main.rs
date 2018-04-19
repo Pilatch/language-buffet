@@ -3,27 +3,27 @@ extern crate serde_json;
 
 #[macro_use]
 extern crate serde_derive;
-use serde_json::Error;
 mod json_strings;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Deserialize)]
 struct Player {
     name: String,
     winPercent: Option<f32>,
 }
 
+fn introduce (player: Player) {
+  match player.winPercent {
+    Some(win_percent) =>
+      println!("{} wins {:?}% of the time.", player.name, win_percent),
+
+    None =>
+      println!("{} is a new player.", player.name),
+    }
+}
+
 fn main() {
-  let parsed: Result<Player, Error> = serde_json::from_str(&json_strings::good());
-
-  match parsed {
-    Ok(player) =>
-      match player.winPercent {
-        Some(win_percent) =>
-          println!("{} wins {:?}% of the time.", player.name, win_percent),
-
-        None =>
-          println!("{} is a new player.", player.name),
-      }
-    Err(err) => println!("Oh no! {}", err),
+  match serde_json::from_str(&json_strings::glad()) {
+    Ok(player) => introduce(player),
+    Err(err) => println!("Here's what went wrong. \n\n{}", err),
   }
 }
