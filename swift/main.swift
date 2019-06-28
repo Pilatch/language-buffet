@@ -5,7 +5,7 @@ import Foundation
 struct Player: Decodable {
     let name: String
     let winPercent: Double?
-    
+
     init(data: Data) throws {
         self = try JSONDecoder().decode(Player.self, from: data)
     }
@@ -16,7 +16,7 @@ func parseJson(player: String) throws -> Player? {
         guard let model = player.data(using:.utf8) else { return nil }
         return try Player(data: model)
     } catch {
-        print("I can't parse this garbage.")
+        print("I can't parse this 🗑.")
         return nil
     }
 }
