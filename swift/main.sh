@@ -1,3 +1,1 @@
-swiftc main.swift jsonstrings.swift -o main
-chmod +x main
-./main
+swiftc main.swift jsonstrings.swift -o main && chmod +x main && ./main
