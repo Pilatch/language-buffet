@@ -29,7 +29,9 @@ func introduce(player: Player) {
     }
 }
 
-let player = try parseJson(player: gladJson)
+// Most entities in Swift have a default access level of Internal so I can access the JSON strings that I declared in that other swift file
+// Read more about access controls here https://docs.swift.org/swift-book/LanguageGuide/AccessControl.html
+let player = try parseJson(player: goodJson)
 if let player = player {
     introduce(player: player)
 }
